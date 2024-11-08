@@ -24,7 +24,11 @@
 
 3. Stream 和 Optional 增强
    
-   `Stream` 中增加了新的方法 `ofNullable()`、`dropWhile()`、`takeWhile()` 以及 `iterate()` 方法的重载方法。`Optional` 类中新增了 `ifPresentOrElse()`、`or()` 和 `stream()` 等方法。`Optional` 类中的 `ifPresentOrElse()`解决了需要是否为空分别做   处理的痛点，避免了 if-else 的使用。
+   `Stream` 中增加了新的方法 `ofNullable()`、`dropWhile()`、`takeWhile()` 以及 `iterate()` 方法的重载方法。
+   
+   `Optional` 类中新增了 `ifPresentOrElse()`、`or()` 和 `stream()` 等方法。
+   
+   其中的 `ifPresentOrElse()`解决了需要是否为空分别做处理的痛点，可以减少 if-else 的使用。
    
    ```java
    Optional.ofNullable("value").ifPresentOrElse(
@@ -82,8 +86,10 @@
    `var` 关键字由编译器完成推断后即会固定下来，变量也就不能再赋值为其他类型的值，所以并不会改变 Java 是一门静态类型语言的事实。`var` 关键字也存在一些局限性，例如以下几种场景均无法编译通过。
    
    ```java
-   var count = null; // 不能声明为 null
-   var lambda = s -> System.out.println(s); // 不能声明为 Lambda 表达式
+   var count = null; // 不能声明 null
+   var lambda = s -> System.out.println(s); // 不能声明 Lambda 表达式
+   Optional.ofNullable("value")
+       .ifPresent((var v) -> System.out.println(v)); // 不能声明Lambda表达式参数
    var array = {1, 2, 3}; // 不能声明数组
    public void method(var arg){} // 不能声明方法参数
    ```
@@ -109,7 +115,7 @@
    ```java
    HttpClient client = HttpClient.newHttpClient();
    HttpRequest request = HttpRequest.newBuilder()
-       .uri(URI.create("http://openjdk.java.net/"))
+       .uri(URI.create("https://www.uuidgenerator.net/api/version4"))
        .build();
    // 同步
    HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -310,13 +316,13 @@
 3. 其他重要特性：
    
    - Java API 文档中的代码片段（[JEP 413: Code Snippets in Java API Documentation](https://openjdk.org/jeps/413)）
-   - 启用finalize方法以进行删除（[JEP 421: Deprecate Finalization for Removal](https://openjdk.org/jeps/421)）
+   - 弃用finalize方法以进行删除（[JEP 421: Deprecate Finalization for Removal](https://openjdk.org/jeps/421)）
 
 ## JDK21
 
 1. 记录类型模式匹配（[JEP 440: Record Patterns](https://openjdk.org/jeps/440)）
    
-   `instanceof`关键词在类型检查与类型转换的能力的基础上，针对`record`类型进行了增强，支持展   开其内部的字段，并且支持嵌套展开。
+   `instanceof`关键词在类型检查与类型转换的能力的基础上，针对`record`类型进行了增强，支持展开其内部的字段，并且支持嵌套展开。
    
    ```java
    record Size(int width, int height) { }
@@ -388,5 +394,5 @@
 
 4. 其他重要特性：
    
-   - 序列化集合（[JEP 413: Code Snippets in Java API Documentation](https://openjdk.org/jeps/413)）
+   - 序列化集合（[JEP 431: Sequenced Collections](https://openjdk.org/jeps/431)）
    - 分代 ZGC（[JEP 439: Generational ZGC](https://openjdk.org/jeps/439)）
